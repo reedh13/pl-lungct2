@@ -27,15 +27,15 @@ Usage
 
 .. code::
 
-        lungct                                                          \\
-            [--dir <dir>]                                               \\
-            [-h] [--help]                                               \\
-            [--json]                                                    \\
-            [--man]                                                     \\
-            [--meta]                                                    \\
-            [--savejson <DIR>]                                          \\
-            [-v <level>] [--verbosity <level>]                          \\
-            [--version]                                                 \\
+        lungct                                                          \
+            [--dir <dir>]                                               \
+            [-h] [--help]                                               \
+            [--json]                                                    \
+            [--man]                                                     \
+            [--meta]                                                    \
+            [--savejson <DIR>]                                          \
+            [-v <level>] [--verbosity <level>]                          \
+            [--version]                                                 \
             <outputDir>
 
 Arguments
