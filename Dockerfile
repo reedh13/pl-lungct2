@@ -6,12 +6,12 @@
 #
 # For example if building a local version, you could do:
 #
-#   docker build --build-arg UID=$UID -t local/pl-lungCT .
+#   docker build --build-arg UID=$UID -t local/pl-lungct .
 #
 # In the case of a proxy (located at 192.168.13.14:3128), do:
 #
 #    export PROXY=http://192.168.13.14:3128
-#    docker build --build-arg http_proxy=$PROXY --build-arg UID=$UID -t local/pl-lungCT .
+#    docker build --build-arg http_proxy=$PROXY --build-arg UID=$UID -t local/pl-lungct .
 #
 # To run an interactive shell inside this container, do:
 #
@@ -19,7 +19,7 @@
 #
 # To pass an env var HOST_IP to container, do:
 #
-#   docker run -ti -e HOST_IP=$(ip route | grep -v docker | awk '{if(NF==11) print $9}') --entrypoint /bin/bash local/pl-lungCT
+#   docker run -ti -e HOST_IP=$(ip route | grep -v docker | awk '{if(NF==11) print $9}') --entrypoint /bin/bash local/pl-lungct
 #
 # To debug from within a container:
 #
