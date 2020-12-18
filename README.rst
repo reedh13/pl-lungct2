@@ -1,4 +1,4 @@
-pl-lungCT
+pl-lungct
 ================================
 
 .. image:: https://travis-ci.org/FNNDSC/lungct.svg?branch=master
@@ -13,13 +13,13 @@ pl-lungCT
 Abstract
 --------
 
-This plugin simply copies a specific lung image of interest to its output directory.
+This plugin simply copies a specific lung image of interest to its output directory. This plugin is primarily of use in the COVID-NET workflow.
 
 
 Description
 -----------
 
-``lungct`` is a ChRIS-based application that...
+``lungct`` simply copies internal lungCT DICOM data dir to the ``<outputDir>``. If an optional ``[--dir <dir>]`` is passed, then contents of ``<dir>`` are copied instead.
 
 
 Usage
@@ -27,60 +27,54 @@ Usage
 
 .. code::
 
-    python lungct.py
-        [-h|--help]
-        [--json] [--man] [--meta]
-        [--savejson <DIR>]
-        [-v|--verbosity <level>]
-        [--version]
-        <inputDir> <outputDir>
-
+        lungct                                                          \\
+            [--dir <dir>]                                               \\
+            [-h] [--help]                                               \\
+            [--json]                                                    \\
+            [--man]                                                     \\
+            [--meta]                                                    \\
+            [--savejson <DIR>]                                          \\
+            [-v <level>] [--verbosity <level>]                          \\
+            [--version]                                                 \\
+            <outputDir>
 
 Arguments
 ~~~~~~~~~
 
 .. code::
 
-    [-h] [--help]
-    If specified, show help message and exit.
+        [--dir <dir>]
+        An optional override directory to copy to the <outputDir>.
+        Note, if run from a containerized version, this will copy
+        a directory from the *container* file system.
 
-    [--json]
-    If specified, show json representation of app and exit.
+        [-h] [--help]
+        If specified, show help message and exit.
 
-    [--man]
-    If specified, print (this) man page and exit.
+        [--json]
+        If specified, show json representation of app and exit.
 
-    [--meta]
-    If specified, print plugin meta data and exit.
+        [--man]
+        If specified, print (this) man page and exit.
 
-    [--savejson <DIR>]
-    If specified, save json representation file to DIR and exit.
+        [--meta]
+        If specified, print plugin meta data and exit.
 
-    [-v <level>] [--verbosity <level>]
-    Verbosity level for app. Not used currently.
+        [--savejson <DIR>]
+        If specified, save json representation file to DIR and exit.
 
-    [--version]
-    If specified, print version number and exit.
+        [-v <level>] [--verbosity <level>]
+        Verbosity level for app. Not used currently.
+
+        [--version]
+        If specified, print version number and exit.
 
 
 Getting inline help is:
 
 .. code:: bash
 
-    docker run --rm fnndsc/pl-lungCT lungct --man
-
-Run
-~~~
-
-You need you need to specify input and output directories using the `-v` flag to `docker run`.
-
-
-.. code:: bash
-
-    docker run --rm -u $(id -u)                             \
-        -v $(pwd)/in:/incoming -v $(pwd)/out:/outgoing      \
-        fnndsc/pl-lungCT lungct                        \
-        /incoming /outgoing
+    docker run --rm fnndsc/pl-lungct lungct --man
 
 
 Development
@@ -90,12 +84,51 @@ Build the Docker container:
 
 .. code:: bash
 
-    docker build -t local/pl-lungCT .
+    docker build --build-arg UID=$UID -t local/pl-lungct .
+
+Debug
+-----
+
+Assuming you are in the root dir of the source repo:
+
+.. code:: bash
+
+   docker run -ti                                                   \
+    -v $(pwd)/lungct:/usr/local/lib/python3.8/dist-packages/lungct  \
+    -v $(pwd)/out:/outgoing                                         \
+    local/pl-lungct lungct /outgoing
+
 
 Examples
 --------
 
-Put some examples here!
+Copy the embedded lung CT data to the ``out`` directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You need you need to specify input and output directories using the `-v` flag to `docker run`.
+
+
+.. code:: bash
+
+    # Here, files are copied as localuser
+    mkdir out && chmod 777 out
+    docker run --rm -u $(id -u)                                 \
+        -v  $(pwd)/out:/outgoing                                \
+        fnndsc/pl-lungct lungct                                 \
+        /outgoing
+
+Copy a user specified directory to the ``out`` directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: bash
+
+    # Here, files are copied as root
+    mkdir out && chmod 777 out
+    docker run --rm                                             \
+        -v  $(pwd)/out:/outgoing                                \
+        fnndsc/pl-lungct lungct                                 \
+        --dir /etc                                              \
+        /outgoing
 
 
 .. image:: https://raw.githubusercontent.com/FNNDSC/cookiecutter-chrisapp/master/doc/assets/badge/light.png
