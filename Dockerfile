@@ -37,6 +37,7 @@ WORKDIR /usr/local/src
 COPY . .
 RUN pip --disable-pip-version-check install .                   \
     && useradd -u $UID -ms /bin/bash localuser                  \
+    && apt update                                               \
     && apt-get install -y sudo                                  \
     && echo "localuser:localuser" | chpasswd                    \
     && addgroup localuser sudo                                  \
