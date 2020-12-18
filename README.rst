@@ -13,7 +13,7 @@ pl-lungct
 Abstract
 --------
 
-This plugin simply copies a specific lung image of interest to its output directory. This plugin is primarily of use in the COVID-NET workflow.
+This plugin copies canned data to its output and is primarily of use in the COVID-NET workflow.
 
 
 Description
