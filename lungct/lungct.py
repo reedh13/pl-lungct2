@@ -131,9 +131,6 @@ class Lungct(ChrisApp):
     This plugin simply copies a specific lung image of interest to its output directory.
     """
     PACKAGE                 = __package__
-    SELFPATH                = os.path.dirname(os.path.abspath(__file__))
-    SELFEXEC                = os.path.basename(__file__)
-    EXECSHELL               = 'python3'
     CATEGORY                = ''
     TYPE                    = 'fs'
     ICON                    = '' # url of an icon image
